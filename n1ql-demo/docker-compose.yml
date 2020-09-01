@@ -1,0 +1,37 @@
+version: '2'
+ 
+services:
+    n1ql-couchbase:
+        image: bentonam/couchbase-docker:enterprise
+        container_name: couchbase-demo
+        ports:
+          - "8091-8094:8091-8094"
+          - "11210:11210"
+        environment:
+            CLUSTER_USERNAME: Administrator
+            CLUSTER_PASSWORD: password
+            CLUSTER_NAME: My Couchbase Cluster
+            SERVICES: data,index,query,fts
+            CLUSTER_RAMSIZE: 500
+            BUCKET: default-bucket
+            BUCKET_RAMSIZE: 300
+            SAMPLE_BUCKETS: beer-sample, travel-sample
+            NODE_INIT_INDEX_PATH: /opt/couchbase/var/lib/couchbase/indexes
+            RBAC_USERNAME: someuser
+            RBAC_PASSWORD: password123
+            RBAC_PASSWORD: bucket_full_access[default-bucket]
+
+    n1ql-nodejs:
+        build: nodejs
+        ports:
+            - 3000:3000
+        environment:
+            - COUCHBASE_HOST=n1ql-couchbase
+            - COUCHBASE_BUCKET=beer-sample
+            - COUCHBASE_BUCKET_PASSWORD=
+            - COUCHBASE_ADMIN_USER=Administrator
+            - COUCHBASE_ADMIN_PASSWORD=password
+            - APPLICATION_PORT=3000
+        links:
+            - n1ql-couchbase
+        restart: always
