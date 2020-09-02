@@ -1,6 +1,7 @@
 # Description
 
 `N1QLMap` is an N1QL exploitation tool. Currently works with Couchbase database. The tool supports data extraction and performing SSRF attacks via CURL.
+More information can be found here: [https://labs.f-secure.com/blog/n1ql-injection-kind-of-sql-injection-in-a-nosql-database](https://labs.f-secure.com/blog/n1ql-injection-kind-of-sql-injection-in-a-nosql-database).
 
 # Usage 
 
